@@ -198,5 +198,9 @@ object frmMain: TfrmMain
       Caption = 'Option'
       OnClick = Option1Click
     end
+    object mniGit1: TMenuItem
+      Caption = 'Test for Git'
+      OnClick = mniGit1Click
+    end
   end
 end

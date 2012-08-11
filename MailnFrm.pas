@@ -30,6 +30,7 @@ type
     mm1: TMainMenu;
     File1: TMenuItem;
     Option1: TMenuItem;
+    mniGit1: TMenuItem;
     procedure btnConnectMoxaClick(Sender: TObject);
     procedure btnDisconnectMoxaClick(Sender: TObject);
     procedure btn3Click(Sender: TObject);
@@ -47,6 +48,7 @@ type
     procedure btnReadLnClick(Sender: TObject);
     procedure Option1Click(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure mniGit1Click(Sender: TObject);
   private
     { Private declarations }
     procedure SendChFromStr(s: string);
@@ -388,6 +390,11 @@ end;
 procedure TfrmMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   idtlnt1.Disconnect
+end;
+
+procedure TfrmMain.mniGit1Click(Sender: TObject);
+begin
+  ShowMessage('Test for Git');
 end;
 
 end.
