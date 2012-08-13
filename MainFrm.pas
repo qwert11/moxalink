@@ -30,6 +30,7 @@ type
     mm1: TMainMenu;
     File1: TMenuItem;
     Option1: TMenuItem;
+    mniGit1: TMenuItem;
     procedure btnConnectMoxaClick(Sender: TObject);
     procedure btnDisconnectMoxaClick(Sender: TObject);
     procedure btn3Click(Sender: TObject);
@@ -45,6 +46,9 @@ type
     procedure chkConvertVithOrigClick(Sender: TObject);
     procedure btnAllDataClick(Sender: TObject);
     procedure btnReadLnClick(Sender: TObject);
+    procedure Option1Click(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure mniGit1Click(Sender: TObject);
   private
     { Private declarations }
     procedure SendChFromStr(s: string);
@@ -54,6 +58,8 @@ type
     procedure GetTextReadLn;
     procedure GetLine;
     procedure ConnectToMoxa;
+
+    procedure StatProc;
   public
     { Public declarations }
   end;
@@ -62,6 +68,8 @@ var
   frmMain: TfrmMain;
 
 implementation
+
+uses OptionFrm;
 
 {$R *.dfm}
 
@@ -91,6 +99,10 @@ var
 begin
   for I := 1 to Length(s) do
     idtlnt1.SendCh(s[I]);
+//  if s <> NullAsStringValue then begin
+//    idtlnt1.SendCmd(s + ';' + #13);
+//    //idtlnt1.SendCh(';');
+//  end;
   idtlnt1.SendCh(#13);
 end;
 
@@ -132,11 +144,23 @@ begin
     Result := Result + s[I] + '<' + IntToStr(Ord(s[I])) + '>'
 end;
 
-
+                          {WaitFor
+AllData
+ReadLn
+ReadLine}
 
 procedure TfrmMain.GetText;                                   {readmemorystring   stringstring}
 begin
-  GetTextWaitFor
+  with frmOption.cbbProcedure do
+  if Items[ItemIndex] = 'WaitFor' then
+    GetTextWaitFor else
+  if Items[ItemIndex] = 'AllData' then
+    GetTextAllData else
+  if Items[ItemIndex] = 'ReadLn' then
+    GetTextReadLn else
+  if Items[ItemIndex] = 'ReadLine' then
+    GetLine;
+  StatProc
 end;
 
 {procedure TForm1.GetText;                                   //readmemorystring   stringstring
@@ -245,14 +269,26 @@ procedure TfrmMain.ConnectToMoxa;
 begin
   if idtlnt1.Connected then
     Exit;
-  idtlnt1.Connect;
-  mmoLog.Clear;
-  GetText
+  try
+    idtlnt1.Connect;
+    mmoLog.Clear;
+    GetText
+  except
+    on E: Exception do begin
+      Application.MessageBox(PChar(E.Message), 'ошибка', MB_ICONERROR);
+      Application.Terminate;
+    end;
+  end;
 end;
 
 procedure TfrmMain.FormActivate(Sender: TObject);
 begin
   WindowState := wsMaximized;
+  //ReadIni()
+  if not FileExists(ExtractFilePath(Application.ExeName)  + 'Name.INI') then
+    WriteIni('ooooo', 'fffff', '1')
+  else
+    frmOption.SetParam;
   ConnectToMoxa
 end;
 
@@ -338,6 +374,27 @@ begin
     mmoLog.Lines.Add('Original Length(s): ' + IntToStr(Length(s)) + ', ReadLn: ' + s);
   end;
 
+end;
+
+procedure TfrmMain.Option1Click(Sender: TObject);
+begin
+  frmOption.ShowModal;
+  StatProc
+end;
+
+procedure TfrmMain.StatProc;
+begin
+  stat1.Panels[0].Text := frmOption.cbbProcedure.Items[frmOption.cbbProcedure.ItemIndex]
+end;
+
+procedure TfrmMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+  idtlnt1.Disconnect
+end;
+
+procedure TfrmMain.mniGit1Click(Sender: TObject);
+begin
+  ShowMessage('Test for Git');
 end;
 
 end.

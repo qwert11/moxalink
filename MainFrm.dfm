@@ -1,6 +1,6 @@
 object frmMain: TfrmMain
-  Left = 476
-  Top = 192
+  Left = 661
+  Top = 132
   Width = 918
   Height = 517
   Caption = #1052#1086#1082#1089#1072' '#1082#1083#1080#1077#1085#1090
@@ -13,6 +13,7 @@ object frmMain: TfrmMain
   Menu = mm1
   OldCreateOrder = False
   OnActivate = FormActivate
+  OnCloseQuery = FormCloseQuery
   PixelsPerInch = 96
   TextHeight = 13
   object mmoLog: TMemo
@@ -41,7 +42,6 @@ object frmMain: TfrmMain
       Width = 121
       Height = 21
       Hint = 'Press ENTER'
-      MaxLength = 1
       TabOrder = 0
       OnChange = edt1Change
       OnClick = edt1Click
@@ -196,6 +196,11 @@ object frmMain: TfrmMain
     end
     object Option1: TMenuItem
       Caption = 'Option'
+      OnClick = Option1Click
+    end
+    object mniGit1: TMenuItem
+      Caption = 'Test for Git'
+      OnClick = mniGit1Click
     end
   end
 end
