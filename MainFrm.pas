@@ -239,14 +239,14 @@ begin
 end;
 
 procedure TfrmMain.edt1Change(Sender: TObject);
-var
-  s: string;
+//var
+//  s: string;
 begin
-  if Length(edt1.Text) > 1 then begin
-    s := edt1.Text;
-    edt1.Text := s[Length(s)];
-  end;
-  edt1.SelectAll  
+//  if Length(edt1.Text) > 1 then begin
+//    s := edt1.Text;
+//    edt1.Text := s[Length(s)];
+//  end;
+//  edt1.SelectAll  
 end;
 
 procedure TfrmMain.edt1Click(Sender: TObject);
