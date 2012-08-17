@@ -181,7 +181,7 @@ object frmMain: TfrmMain
     Host = '192.168.1.251'
     Port = 23
     Terminal = 'dumb'
-    Left = 72
+    Left = 168
     Top = 16
   end
   object dlgOpen1: TOpenDialog

@@ -284,9 +284,8 @@ end;
 procedure TfrmMain.FormActivate(Sender: TObject);
 begin
   WindowState := wsMaximized;
-  //ReadIni()
-  if not FileExists(ExtractFilePath(Application.ExeName)  + 'Name.INI') then
-    WriteIni('ooooo', 'fffff', '1')
+  if not FileExists(ExtractFilePath(Application.ExeName)  + 'Config.INI') then
+    WriteIni('Window', 'FunctionOne', '1')
   else
     frmOption.SetParam;
   ConnectToMoxa
